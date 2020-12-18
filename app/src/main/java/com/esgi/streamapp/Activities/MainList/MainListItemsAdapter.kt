@@ -1,16 +1,20 @@
 package com.esgi.streamapp.Activities.MainList
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.esgi.streamapp.Activities.MovieDetailActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.models.Movie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.rv_movie_item.view.*
 
-class MainListItemsAdapter(private val movies : List<Movie>)
+class MainListItemsAdapter(private val movies : List<Movie>, private val context: Context)
     : RecyclerView.Adapter<MainListItemsAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ViewHolder {
@@ -26,6 +30,11 @@ class MainListItemsAdapter(private val movies : List<Movie>)
                                   position: Int) {
         val movie = movies[position]
         Picasso.get().load(movie.image).into(holder.imageView)
+        holder.imageView.setOnClickListener {
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtra("idMovie", movie?.id)
+            ContextCompat.startActivity(context, intent, null)
+        }
     }
 
 

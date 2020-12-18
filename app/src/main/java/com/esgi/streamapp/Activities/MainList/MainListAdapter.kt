@@ -47,7 +47,7 @@ class MainListAdapter(private val categories : List<Category>, private val conte
         childLayoutManager.initialPrefetchItemCount = 4
         holder.recyclerView.apply {
             layoutManager = childLayoutManager
-            adapter = MainListItemsAdapter(category.movies)
+            adapter = MainListItemsAdapter(category.movies, context)
             setRecycledViewPool(viewPool)
         }
     }

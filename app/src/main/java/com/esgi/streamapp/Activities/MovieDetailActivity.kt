@@ -29,7 +29,7 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.media_detail)
-        intent.extras?.get("idMedia")?.let {
+        intent.extras?.get("idMovie")?.let {
             idMedia = it as Int
         }
         movieTitle = this.findViewById(R.id.title)
@@ -48,14 +48,12 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
             Log.d("res", stringResponse)
             movie = Gson().fromJson(stringResponse, Movie::class.java)
             uiThread {
-                Log.d("toto", "movie = $movie")
                 movieDescription.text = movie.description
                 movieTitle.text = movie.title
                 movieRate.rating = movie.rate.toFloat()
                 Picasso.get().load(movie.image).resize(movieImg.width, movieImg.height).onlyScaleDown().into(movieImg)
             }
         }
-
     }
 
     override fun onClick(v: View?) {

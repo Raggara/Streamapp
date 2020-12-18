@@ -129,6 +129,7 @@ class PlayerActivity : AppCompatActivity() {
                     val error = ErrorHelper(TypeError.Player, 503, "Une erreur s'est produite lors de la lecture. Veuillez réessayer ultérieurement.")
                     intent.putExtra("error", error)
                     releasePlayer()
+                    finish()
                 }
             }
 
@@ -137,6 +138,7 @@ class PlayerActivity : AppCompatActivity() {
                 val error = ErrorHelper(TypeError.Player, 503, "Une erreur s'est produite lors de la lecture. Veuillez réessayer ultérieurement.")
                 intent.putExtra("error", error as Serializable)
                 releasePlayer()
+                finish()
             }
         })
         player.seekTo(currentWindow, playbackPosition)

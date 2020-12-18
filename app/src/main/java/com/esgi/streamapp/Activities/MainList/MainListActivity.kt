@@ -1,16 +1,15 @@
 package com.esgi.streamapp.Activities.MainList
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
-import com.esgi.streamapp.utils.models.Categories
-import com.esgi.streamapp.utils.models.Category
-import com.esgi.streamapp.utils.models.Constants
-import com.esgi.streamapp.utils.models.Movie
+import com.esgi.streamapp.utils.models.*
 import com.google.gson.Gson
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -24,6 +23,11 @@ class MainListActivity: AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.home_list_activity)
+        if (!Constants.isNetworkAvailable(this)){
+            startActivity(Intent(this, ErrorHandlerActivity::class.java))
+            val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
+            intent.putExtra("error", error)
+        }
         recycler = this.findViewById(R.id.home_rv);
         pgrBar = this.findViewById(R.id.pgrBar)
         initData()
