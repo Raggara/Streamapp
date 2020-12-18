@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#8188ef</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="played">#F44336</color>
+    <color name="buffered">#367CF4</color>
+    <color name="scrubber">#491A16</color>
+    <color name="unplayed">#665756</color>
+    <color name="button_push">#FFF</color>
+    <color name="button">#7aa7cd</color>
+    <color name="text">#000</color>
+    <color name="title">#8581ba</color>
+    <color name="background">#f4f3fc</color>
+</resources>

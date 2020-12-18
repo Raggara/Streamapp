@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Streamapp</string>
+    <string name="description">Une appli de stream pour les bg</string>
+    <string name="notation">Notation du film</string>
+    <string name="title">Titre du film</string>
+    <string name="readMovie">Lire</string>
+</resources>
