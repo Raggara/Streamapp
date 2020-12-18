@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
+import com.esgi.streamapp.Activities.MainList.MainListActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.models.Constants
 import com.esgi.streamapp.utils.models.ErrorHelper
@@ -20,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(view)
         Handler(Looper.getMainLooper()).postDelayed({
             if(Constants.isNetworkAvailable(this)) {
-                startActivity(Intent(this, PlayerActivity::class.java))
+                startActivity(Intent(this, MainListActivity::class.java))
             }else{
                 startActivity(Intent(this, ErrorHandlerActivity::class.java))
                 val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
