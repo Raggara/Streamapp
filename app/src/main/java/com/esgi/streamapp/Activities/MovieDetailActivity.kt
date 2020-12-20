@@ -6,13 +6,17 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
-import com.esgi.streamapp.utils.models.Constants
+import com.esgi.streamapp.utils.Constants
+import com.esgi.streamapp.utils.models.ErrorHelper
 import com.esgi.streamapp.utils.models.Movie
+import com.esgi.streamapp.utils.models.TypeError
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.io.Serializable
 import java.net.URL
 
 class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
@@ -29,6 +33,12 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.media_detail)
+        if (!Constants.isNetworkAvailable(this)){
+            startActivity(Intent(this, ErrorHandlerActivity::class.java))
+            val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
+            intent.putExtra("error", error as Serializable)
+            finish()
+        }
         intent.extras?.get("idMovie")?.let {
             idMedia = it as Int
         }

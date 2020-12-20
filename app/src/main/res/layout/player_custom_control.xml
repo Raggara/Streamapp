@@ -11,7 +11,10 @@
         android:id="@+id/defaultTimeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:unplayed_color="@color/exo_white"
+        app:played_color="@color/exo_black_opacity_30"
+        app:buffered_color="@color/colorPrimary"/>
 
     <ImageView
         android:id="@+id/exo_play"

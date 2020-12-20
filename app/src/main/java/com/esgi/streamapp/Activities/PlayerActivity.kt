@@ -2,12 +2,10 @@
 
 package com.esgi.streamapp.Activities
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ProgressBar
@@ -15,25 +13,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
-import com.esgi.streamapp.utils.models.Constants
+import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.ErrorHelper
 import com.esgi.streamapp.utils.models.TypeError
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.source.hls.DefaultHlsDataSourceFactory
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelection
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlinx.android.synthetic.main.player_custom_control.*
-import java.io.Serializable
-import java.lang.reflect.Type
 
 
 class PlayerActivity : AppCompatActivity() {
@@ -110,7 +102,7 @@ class PlayerActivity : AppCompatActivity() {
 
         val hlsDataSourceFactory = DefaultHlsDataSourceFactory(dataSourceFactory)
 
-        val hlsUrl = Constants.URL_STREAM //+ this.moviePath
+        val hlsUrl = Constants.URL_STREAM + "CaptainAmericaTheFirstAvenger.m3u8"
         val uri: Uri = Uri.parse(hlsUrl)
         var mediaSource: HlsMediaSource = HlsMediaSource.Factory(hlsDataSourceFactory).createMediaSource(uri)
         player.prepare(mediaSource)
@@ -136,7 +128,10 @@ class PlayerActivity : AppCompatActivity() {
             override fun onPlayerError(error: ExoPlaybackException) {
                 startActivity(Intent(this@PlayerActivity, ErrorHandlerActivity::class.java))
                 val error = ErrorHelper(TypeError.Player, 503, "Une erreur s'est produite lors de la lecture. Veuillez réessayer ultérieurement.")
-                intent.putExtra("error", error as Serializable)
+                Log.d("envoi extra", error.toString())
+                val bundle = Bundle()
+                bundle.putSerializable("error", error)
+                intent.putExtras(bundle)
                 releasePlayer()
                 finish()
             }

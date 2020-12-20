@@ -2,23 +2,24 @@ package com.esgi.streamapp.Activities.ListMovies
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.Activities.MovieDetailActivity
 import com.esgi.streamapp.R
-import com.esgi.streamapp.utils.models.Constants
+import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.ErrorHelper
 import com.esgi.streamapp.utils.models.Movie
 import com.esgi.streamapp.utils.models.TypeError
 import com.google.gson.Gson
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.io.Serializable
 import java.net.URL
 
 class MovieListActivity: AppCompatActivity(),
@@ -37,7 +38,7 @@ class MovieListActivity: AppCompatActivity(),
         if (!Constants.isNetworkAvailable(this)){
             startActivity(Intent(this, ErrorHandlerActivity::class.java))
             val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
-            intent.putExtra("error", error)
+            intent.putExtra("error", error as Serializable)
             finish()
         }
         intent.extras?.get("category")?.let {
@@ -57,9 +58,10 @@ class MovieListActivity: AppCompatActivity(),
                 //On attend de recevoir les données pour créer le recyclerview
                 movies?.let {
                     recycler?.apply {
-                        layoutManager = LinearLayoutManager(this@MovieListActivity)
+                        layoutManager = GridLayoutManager(this@MovieListActivity, 2)
                         adapter = MovieAdapter(
                             it,
+                            this@MovieListActivity,
                             this@MovieListActivity
                         )
                     }

@@ -2,17 +2,15 @@ package com.esgi.streamapp.Activities.Handler
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.streamapp.Activities.MainList.MainListActivity
 import com.esgi.streamapp.R
-import com.esgi.streamapp.utils.models.Constants
+import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.ErrorHelper
 import com.esgi.streamapp.utils.models.TypeError
-import java.io.Serializable
 
 class ErrorHandlerActivity : AppCompatActivity() {
     private var errorText : TextView? = null
