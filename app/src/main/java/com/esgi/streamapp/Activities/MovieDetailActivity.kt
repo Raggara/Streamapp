@@ -21,11 +21,11 @@ import java.net.URL
 
 class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var movieTitle: TextView;
-    private lateinit var movieDescription: TextView;
-    private lateinit var movieRate: RatingBar;
-    private lateinit var btnPlay: ImageButton;
-    private lateinit var movieImg: ImageView
+    private var movieTitle: TextView? = null;
+    private var movieDescription: TextView? = null;
+    private var movieRate: RatingBar? = null;
+    private var btnPlay: ImageButton? = null;
+    private var movieImg: ImageView? = null
     private var idMedia: Int = -1
     private var movie: Movie = Movie(-1, "", "", "", 0.0, "", "")
 
@@ -33,6 +33,7 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.media_detail)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
         if (!Constants.isNetworkAvailable(this)){
             startActivity(Intent(this, ErrorHandlerActivity::class.java))
             val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
@@ -47,7 +48,7 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
         movieRate = this.findViewById(R.id.rating)
         btnPlay = this.findViewById(R.id.btnPlay)
         movieImg = this.findViewById(R.id.mediaImg)
-        btnPlay.setOnClickListener(this)
+        btnPlay?.setOnClickListener(this)
         initData()
     }
 
@@ -58,10 +59,10 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
             Log.d("res", stringResponse)
             movie = Gson().fromJson(stringResponse, Movie::class.java)
             uiThread {
-                movieDescription.text = movie.description
-                movieTitle.text = movie.title
-                movieRate.rating = movie.rate.toFloat()
-                Picasso.get().load(movie.image).resize(movieImg.width, movieImg.height).onlyScaleDown().into(movieImg)
+                movieDescription?.text = movie.description
+                movieTitle?.text = movie.title
+                movieRate?.rating = movie.rate.toFloat()
+                movieImg?.let { Picasso.get().load(movie.image).resize(it.width, it.height).onlyScaleDown().into(it) }
             }
         }
     }

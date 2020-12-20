@@ -6,11 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="2dp"
-    card_view:cardBackgroundColor="#fff"
+    card_view:cardBackgroundColor="@color/background"
     card_view:cardCornerRadius="5dp"
-
-    card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
@@ -21,6 +18,7 @@
         <TextView
             android:id="@+id/rv_category_name"
             style="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -47,7 +45,8 @@
             android:layout_toEndOf="@id/rv_category_name"
             android:layout_alignParentTop="true"
             android:padding="20dp"
-            android:text="Tout voir" />
+            android:textColor="@color/text"
+            android:text="Tout voir..." />
 
     </RelativeLayout>
 

@@ -33,6 +33,7 @@ class MovieListActivity: AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.media_list)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
         recycler = this.findViewById(R.id.main_recyclerview);
         pgrBar = this.findViewById(R.id.pgrBar)
         if (!Constants.isNetworkAvailable(this)){

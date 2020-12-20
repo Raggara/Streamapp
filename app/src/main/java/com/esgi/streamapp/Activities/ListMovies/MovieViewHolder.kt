@@ -50,7 +50,7 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup, private val c
         title?.text = movie.title
         idMovie = movie.id
 
-        itemView?.setOnClickListener(this)
+        itemView.setOnClickListener(this)
         imgMenu?.setOnClickListener {
             val popupMenu: PopupMenu = PopupMenu(this.context,imgMenu)
             popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
@@ -68,13 +68,13 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup, private val c
                     }
                     R.id.play -> {
                         val intent = Intent(this.context, PlayerActivity::class.java)
-                        intent.putExtra("path", movie?.path)
+                        intent.putExtra("path", movie.path)
                         startActivity(this.context, intent, null)
                     }
 
                     R.id.movieDetail -> {
                         val intent = Intent(this.context, MovieDetailActivity::class.java)
-                        intent.putExtra("idMovie", movie?.id)
+                        intent.putExtra("idMovie", movie.id)
                         startActivity(this.context,intent, null)
                     }
                 }

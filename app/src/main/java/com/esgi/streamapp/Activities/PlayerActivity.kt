@@ -102,7 +102,7 @@ class PlayerActivity : AppCompatActivity() {
 
         val hlsDataSourceFactory = DefaultHlsDataSourceFactory(dataSourceFactory)
 
-        val hlsUrl = Constants.URL_STREAM + "CaptainAmericaTheFirstAvenger.m3u8"
+        val hlsUrl = Constants.URL_STREAM + "AvengersAgeOfUltron.m3u8"
         val uri: Uri = Uri.parse(hlsUrl)
         var mediaSource: HlsMediaSource = HlsMediaSource.Factory(hlsDataSourceFactory).createMediaSource(uri)
         player.prepare(mediaSource)
