@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mediaPlaying.PlayerActivity">
+    android:background="#000">
+
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/video_view"
         app:controller_layout_id="@layout/player_custom_control"

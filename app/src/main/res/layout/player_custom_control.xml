@@ -8,13 +8,15 @@
     android:layout_height="match_parent">
 
     <com.google.android.exoplayer2.ui.DefaultTimeBar
-        android:id="@+id/defaultTimeBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/exo_progress"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:unplayed_color="@color/exo_white"
-        app:played_color="@color/exo_black_opacity_30"
-        app:buffered_color="@color/colorPrimary"/>
+        app:played_color="@color/colorPrimary"
+        app:buffered_color="@color/exo_white"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="30dp"/>
 
     <ImageView
         android:id="@+id/exo_play"
@@ -38,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/replay"
+        android:id="@+id/backward"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_go_backward"
@@ -64,25 +66,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00:00"
-        app:layout_constraintBottom_toTopOf="@+id/defaultTimeBar"
+        app:layout_constraintBottom_toTopOf="@+id/exo_progress"
         app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:textColor="@color/exo_white"
         android:id="@+id/exo_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00:00"
-        app:layout_constraintBottom_toTopOf="@+id/defaultTimeBar"
+        app:layout_constraintBottom_toTopOf="@+id/exo_progress"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/exo_error_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/exo_white"
-        app:layout_constraintBottom_toTopOf="@+id/exo_play"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
