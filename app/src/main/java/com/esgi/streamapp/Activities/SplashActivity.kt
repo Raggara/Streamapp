@@ -19,7 +19,6 @@ import java.io.Serializable
 
 class SplashActivity : AppCompatActivity() {
 
-    private var error : ErrorHelper = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
     private var vidSplash :  VideoView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,21 +31,13 @@ class SplashActivity : AppCompatActivity() {
         vidSplash?.setVideoURI(video)
 
         vidSplash?.start()
-        val NetworkAvailable: Boolean = Constants.isNetworkAvailable(this)
-        val ApiAvailable: Boolean = Constants.isApiAvailable()
         Handler(Looper.getMainLooper()).postDelayed({
-            if(NetworkAvailable && ApiAvailable) {
+            if(Constants.isNetworkAvailable(this)) {
                 startActivity(Intent(this, MainListActivity::class.java))
             }else{
-                if(!NetworkAvailable){
-                    error?.errorType = TypeError.Network
-                }else{
-                    error.errorType = TypeError.API
-                    error.errorMessage = "Le serveur est actuellement en maintenance. Veuillez réessayer ultérieurement."
-                    error.errorStatus = 500
-                }
+                intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
                 startActivity(Intent(this, ErrorHandlerActivity::class.java))
-                intent.putExtra("error", error as Serializable)
+                finish()
             }
             finish()
         }, 3000)

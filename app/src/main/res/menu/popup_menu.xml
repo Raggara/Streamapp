@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/share"
+    <item
+        android:id="@+id/share"
         android:icon="@drawable/ic_baseline_share_24"
-          android:title="Partager"/>
-    <item android:id="@+id/movieDetail"
-        android:icon="@drawable/ic_baseline_details_24"
-        android:title="Fiche du film" />
-    <item android:id="@+id/play"
-        android:icon="@drawable/ic_baseline_play_arrow_24"
-        android:title="Lecture" />
+        android:title="Partager" />
 </menu>

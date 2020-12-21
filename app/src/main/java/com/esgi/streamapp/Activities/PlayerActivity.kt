@@ -3,6 +3,8 @@ package com.esgi.streamapp.Activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
@@ -21,6 +23,7 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.exoplayer2.util.Util
+import com.google.gson.Gson
 import java.io.Serializable
 
 
@@ -43,12 +46,9 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_player)
 
         if (!Constants.isNetworkAvailable(this)){
-            startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
-            intent.putExtra("error", error as Serializable)
-            finish()
+            runError(0)
         }
-        intent.extras?.get("moviePath")?.let {
+        intent.extras?.get(Constants.EXTRA_PATHMOV)?.let {
             moviePath = it as String
         }
 
@@ -70,7 +70,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun initPlayer(){
-        val hlsUrl = Constants.URL_STREAM + "streams/fastfurious7.m3u8"
+        val hlsUrl = Constants.URL_STREAM + moviePath
 
         this.mediaItem = MediaItem.Builder()
             .setUri(Uri.parse(hlsUrl))
@@ -117,18 +117,12 @@ class PlayerActivity : AppCompatActivity() {
                         ExoPlayer.STATE_BUFFERING -> loading?.visibility = View.VISIBLE
                     }
                 }else{
-                    startActivity(Intent(this@PlayerActivity, ErrorHandlerActivity::class.java))
-                    val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
-                    intent.putExtra("error", error as Serializable)
-                    finish()
+                    runError(0)
                 }
             }
 
             override fun onPlayerError(error: ExoPlaybackException) {
-                startActivity(Intent(this@PlayerActivity, ErrorHandlerActivity::class.java))
-                val error = ErrorHelper(TypeError.Player, 500, "Une erreur s'est produite lors de la lecture.")
-                intent.putExtra("error", error as Serializable)
-                finish()
+                runError(2)
             }
         })
     }
@@ -200,4 +194,9 @@ class PlayerActivity : AppCompatActivity() {
         const val STATE_PLAYER_PLAYING = "playerOnPlay"
     }
 
+    private fun runError(type: Int){
+        intent.putExtra(Constants.EXTRA_ERRTYPE, type)
+        startActivity(Intent(this, ErrorHandlerActivity::class.java))
+        finish()
+    }
 }

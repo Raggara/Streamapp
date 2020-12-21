@@ -35,12 +35,11 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
         this.setContentView(R.layout.media_detail)
         setSupportActionBar(findViewById(R.id.my_toolbar))
         if (!Constants.isNetworkAvailable(this)){
+            intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
             startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
-            intent.putExtra("error", error as Serializable)
             finish()
         }
-        intent.extras?.get("idMovie")?.let {
+        intent.extras?.get(Constants.EXTRA_IDMOV)?.let {
             idMedia = it as Int
         }
         movieTitle = this.findViewById(R.id.title)
@@ -56,7 +55,6 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
         doAsync {
             val url = URL(Constants.URL_SERV+"/infos?id=$idMedia")
             val stringResponse = url.readText()
-            Log.d("res", stringResponse)
             movie = Gson().fromJson(stringResponse, Movie::class.java)
             uiThread {
                 movieDescription?.text = movie.description
@@ -69,7 +67,7 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         val intent = Intent(this, PlayerActivity::class.java)
-        intent.putExtra("path", movie.path)
+        intent.putExtra(Constants.EXTRA_PATHMOV, movie.path)
         startActivity(intent)
     }
 

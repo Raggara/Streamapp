@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.esgi.streamapp.Activities.MovieDetailActivity
 import com.esgi.streamapp.Activities.PlayerActivity
 import com.esgi.streamapp.R
+import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.Movie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.all_recycler_items.view.*
@@ -59,23 +60,16 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup, private val c
                     R.id.share ->{
                         val sendIntent: Intent = Intent().apply {
                             action = Intent.ACTION_SEND
-                            putExtra(Intent.EXTRA_TEXT, "Hey, tu connais StreamApp? L'appli de streaming pour les BG.")
+                            putExtra(Intent.EXTRA_TEXT,
+                                """Toi aussi viens regarder ${movie.title} sur StreamApp !
+                                    |Tu veux l'appli? Envoie "Appli" au 61212.
+                                """.trimMargin()
+                            )
                             type = "text/plain"
                         }
 
                         val shareIntent = Intent.createChooser(sendIntent, null)
                         startActivity(this.context, shareIntent, null)
-                    }
-                    R.id.play -> {
-                        val intent = Intent(this.context, PlayerActivity::class.java)
-                        intent.putExtra("path", movie.path)
-                        startActivity(this.context, intent, null)
-                    }
-
-                    R.id.movieDetail -> {
-                        val intent = Intent(this.context, MovieDetailActivity::class.java)
-                        intent.putExtra("idMovie", movie.id)
-                        startActivity(this.context,intent, null)
                     }
                 }
                 true

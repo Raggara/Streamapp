@@ -33,9 +33,9 @@ class MainListActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         if (!Constants.isNetworkAvailable(this)) {
+            intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
             startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
-            intent.putExtra("error", error as Serializable)
+            finish()
         }
         recycler = this.findViewById(R.id.home_rv);
         pgrBar = this.findViewById(R.id.pgrBar)

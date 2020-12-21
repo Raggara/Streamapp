@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.streamapp.Activities.MovieDetailActivity
 import com.esgi.streamapp.R
+import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.Movie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.rv_movie_item.view.*
@@ -32,7 +33,7 @@ class MainListItemsAdapter(private val movies : List<Movie>, private val context
         Picasso.get().load(movie.image).into(holder.imageView)
         holder.imageView.setOnClickListener {
             val intent = Intent(context, MovieDetailActivity::class.java)
-            intent.putExtra("idMovie", movie?.id)
+            intent.putExtra(Constants.EXTRA_IDMOV, movie?.id)
             ContextCompat.startActivity(context, intent, null)
         }
     }

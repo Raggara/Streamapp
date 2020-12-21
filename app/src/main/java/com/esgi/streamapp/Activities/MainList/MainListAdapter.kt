@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.streamapp.Activities.ListMovies.MovieListActivity
 import com.esgi.streamapp.R
+import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.Category
 import kotlinx.android.synthetic.main.category_rv.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -36,7 +37,7 @@ class MainListAdapter(private val categories : List<Category>, private val conte
         holder.textView.text = category.name
         holder.viewAllButton.onClick {
             val intent = Intent(context, MovieListActivity::class.java)
-            intent.putExtra("category", category?.name)
+            intent.putExtra(Constants.EXTRA_NAMECATEG, category?.name)
             ContextCompat.startActivity(context, intent, null)
         }
         val childLayoutManager = LinearLayoutManager(

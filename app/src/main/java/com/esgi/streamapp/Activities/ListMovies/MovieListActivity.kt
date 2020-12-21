@@ -37,12 +37,11 @@ class MovieListActivity: AppCompatActivity(),
         recycler = this.findViewById(R.id.main_recyclerview);
         pgrBar = this.findViewById(R.id.pgrBar)
         if (!Constants.isNetworkAvailable(this)){
+            intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
             startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            val error = ErrorHelper(TypeError.Network, 404, "Vous n'êtes pas connecté à internet.")
-            intent.putExtra("error", error as Serializable)
             finish()
         }
-        intent.extras?.get("category")?.let {
+        intent.extras?.get(Constants.EXTRA_NAMECATEG)?.let {
             categoryName = it as String
         }
         titleCat = this.findViewById(R.id.category_title)
@@ -77,7 +76,7 @@ class MovieListActivity: AppCompatActivity(),
     {
         //Navigation vers la fiche d'info du film
         val intent = Intent(this, MovieDetailActivity::class.java)
-        intent.putExtra("idMovie", movie?.id)
+        intent.putExtra(Constants.EXTRA_IDMOV, movie?.id)
         startActivity(intent)
     }
 }
