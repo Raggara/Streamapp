@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -53,12 +54,13 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.12.2'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.2'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.12.2'
+    implementation 'com.google.android.exoplayer:extension-mediasession:2.12.2'
     //http requests + JSON
     implementation "org.jetbrains.anko:anko:0.10.8"
     implementation 'com.google.code.gson:gson:2.8.6'
     //ImageDownloader
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //Slider
-    implementation 'com.github.smarteist:autoimageslider:1.4.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    //DB room
+    implementation 'androidx.room:room-runtime:2.2.6'
+    kapt 'androidx.room:room-compiler:2.2.6'
 }

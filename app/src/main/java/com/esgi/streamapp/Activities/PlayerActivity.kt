@@ -1,14 +1,20 @@
 package com.esgi.streamapp.Activities
 
+import android.app.PictureInPictureParams
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Parcelable
+import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
@@ -16,6 +22,7 @@ import com.esgi.streamapp.utils.Constants
 import com.esgi.streamapp.utils.models.ErrorHelper
 import com.esgi.streamapp.utils.models.TypeError
 import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlayerView
@@ -66,6 +73,8 @@ class PlayerActivity : AppCompatActivity() {
             isFullscreen = savedInstanceState.getBoolean(STATE_PLAYER_FULLSCREEN)
             isPlayerPlaying = savedInstanceState.getBoolean(STATE_PLAYER_PLAYING)
         }
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
     }
 
@@ -198,5 +207,40 @@ class PlayerActivity : AppCompatActivity() {
         intent.putExtra(Constants.EXTRA_ERRTYPE, type)
         startActivity(Intent(this, ErrorHandlerActivity::class.java))
         finish()
+    }
+
+
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            initPip()
+        }
+    }
+
+    private fun initPip(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+            && packageManager
+                .hasSystemFeature(
+                    PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
+            player_view?.player?.let {
+                playbackPosition = it.currentPosition
+                        player_view?.useController = false
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val params = PictureInPictureParams.Builder()
+                    this.enterPictureInPictureMode(params.build())
+                } else {
+                    this.enterPictureInPictureMode()
+                }
+            }
+            Handler().postDelayed({checkPIPPermission()}, 30)
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun checkPIPPermission(){
+        if(!isInPictureInPictureMode){
+            onBackPressed()
+        }
     }
 }

@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.Constants
-import com.esgi.streamapp.utils.models.ErrorHelper
-import com.esgi.streamapp.utils.models.Movie
-import com.esgi.streamapp.utils.models.TypeError
+import com.esgi.streamapp.utils.models.*
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.doAsync
@@ -26,7 +25,11 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
     private var movieRate: RatingBar? = null;
     private var btnPlay: ImageButton? = null;
     private var movieImg: ImageView? = null
+    private var imgFavEmpty: ImageView? = null
+    private var imgFavPlain: ImageView? = null
+    private var isFavorite: Boolean = false
     private var idMedia: Int = -1
+    private var favorites: Favorites? = null
     private var movie: Movie = Movie(-1, "", "", "", 0.0, "", "")
 
 
@@ -47,8 +50,31 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
         movieRate = this.findViewById(R.id.rating)
         btnPlay = this.findViewById(R.id.btnPlay)
         movieImg = this.findViewById(R.id.mediaImg)
+        imgFavEmpty = this.findViewById(R.id.imgFav)
+        imgFavPlain = this.findViewById(R.id.imgFavPlain)
         btnPlay?.setOnClickListener(this)
         initData()
+        initFav()
+    }
+
+    private fun initFav() {
+        this.imgFavPlain?.setOnClickListener {
+            doAsync {
+                val db = AppDatabase(this@MovieDetailActivity)
+                favorites?.let { it -> db.favoritesDAO().delete(it) }
+            }
+            imgFavPlain?.visibility = View.GONE
+            imgFavEmpty?.visibility = View.VISIBLE
+        }
+
+        this.imgFavEmpty?.setOnClickListener {
+            doAsync {
+                val db = AppDatabase(this@MovieDetailActivity)
+                db.favoritesDAO().insert(Favorites(movie?.id, movie?.id,  movie?.image))
+            }
+            imgFavPlain?.visibility = View.VISIBLE
+            imgFavEmpty?.visibility = View.GONE
+        }
     }
 
     private fun initData(){
@@ -56,11 +82,21 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
             val url = URL(Constants.URL_SERV+"/infos?id=$idMedia")
             val stringResponse = url.readText()
             movie = Gson().fromJson(stringResponse, Movie::class.java)
+            val db = AppDatabase(this@MovieDetailActivity)
+
+            favorites = db.favoritesDAO().getFavById(idMedia)
+            if(favorites != null)isFavorite = true
+
             uiThread {
                 movieDescription?.text = movie.description
                 movieTitle?.text = movie.title
                 movieRate?.rating = movie.rate.toFloat()
                 movieImg?.let { Picasso.get().load(movie.image).resize(it.width, it.height).onlyScaleDown().into(it) }
+                if(isFavorite){
+                    imgFavEmpty?.visibility = View.GONE
+                }else{
+                    imgFavPlain?.visibility = View.GONE
+                }
             }
         }
     }
