@@ -25,6 +25,7 @@ object Constants {
     const val ERRMSG_NET: String = "Vous n'êtes pas connecté à internet. Connectez vous à internet et rechargez la page pour accéder à l'application."
     const val ERRMSG_API: String = "Le serveur est actuellement en maintenance. Veuillez réessayer plus tard."
     const val ERRMSG_PLAYER: String = "Une erreur s'est produite lors de la lecture. Veuillez réessayer plus tard."
+    const val EXTRA_PIP: String = "pipMode"
 
     private var Status: Int? = null
 

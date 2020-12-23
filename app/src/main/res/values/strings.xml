@@ -4,4 +4,7 @@
     <string name="notation">Notation du film</string>
     <string name="title">Titre du film</string>
     <string name="readMovie">Lire</string>
+    <string name="movieSeen">Vous avez déjà commencé à visionner ce film. Souhaitez-vous reprendre où vous en étiez?</string>
+    <string name="resume">Reprendre</string>
+    <string name="restart">Recommencer</string>
 </resources>

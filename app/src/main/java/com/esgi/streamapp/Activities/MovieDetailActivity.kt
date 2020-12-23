@@ -104,6 +104,7 @@ class MovieDetailActivity: AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         val intent = Intent(this, PlayerActivity::class.java)
         intent.putExtra(Constants.EXTRA_PATHMOV, movie.path)
+        intent.putExtra(Constants.EXTRA_IDMOV, movie.id)
         startActivity(intent)
     }
 

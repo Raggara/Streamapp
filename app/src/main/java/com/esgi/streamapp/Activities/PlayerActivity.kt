@@ -3,12 +3,11 @@ package com.esgi.streamapp.Activities
 import android.app.PictureInPictureParams
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Parcelable
-import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -19,19 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.Constants
-import com.esgi.streamapp.utils.models.ErrorHelper
-import com.esgi.streamapp.utils.models.TypeError
+import com.esgi.streamapp.utils.models.*
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
-import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.exoplayer2.util.Util
-import com.google.gson.Gson
-import java.io.Serializable
+import org.jetbrains.anko.displayMetrics
+import org.jetbrains.anko.doAsync
 
 
 class PlayerActivity : AppCompatActivity() {
@@ -39,6 +34,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var dataSourceFactory: DataSource.Factory
     private var loading : ProgressBar? = null
     private var moviePath: String? = null
+    private var idMovie: Int? = null
     private var btn_forward: ImageView? = null
     private var btn_backward: ImageView? = null
     private var player_view: PlayerView? = null
@@ -46,6 +42,8 @@ class PlayerActivity : AppCompatActivity() {
     private var playbackPosition: Long = 0
     private var isFullscreen = false
     private var isPlayerPlaying = true
+    private var videoPlaying: VideoPlaying? = null
+    private var pipMode: Boolean = false
     private lateinit var mediaItem: MediaItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +55,12 @@ class PlayerActivity : AppCompatActivity() {
         }
         intent.extras?.get(Constants.EXTRA_PATHMOV)?.let {
             moviePath = it as String
+        }
+        intent.extras?.get(Constants.EXTRA_IDMOV)?.let {
+            idMovie = it as Int
+        }
+        intent.extras?.get(Constants.EXTRA_PIP)?.let {
+            pipMode = it as Boolean
         }
 
         this.btn_backward = findViewById(R.id.backward)
@@ -78,6 +82,21 @@ class PlayerActivity : AppCompatActivity() {
 
     }
 
+    private fun checkIfSeen() {
+        doAsync {
+            val db = AppDatabase(this@PlayerActivity)
+            videoPlaying = moviePath?.let { db.videoPlayingDAO().findByPath(it) }
+        }
+        Handler().postDelayed({
+            if(videoPlaying != null){
+                if(isPlayerPlaying)player_view?.onPause()
+                var dial = DialogMovieSeen()
+                dial.show(supportFragmentManager, "dialogMovieSeen")
+            }
+        }, 100)
+
+    }
+
     private fun initPlayer(){
         val hlsUrl = Constants.URL_STREAM + moviePath
 
@@ -94,6 +113,7 @@ class PlayerActivity : AppCompatActivity() {
         }
         player_view?.player = exoPlayer
 
+        if(!pipMode)checkIfSeen()
         btn_forward?.setOnClickListener {
             player_view?.player?.currentPosition?.plus(10*1000)?.let { it1 ->
                 player_view?.player?.seekTo(
@@ -111,6 +131,16 @@ class PlayerActivity : AppCompatActivity() {
         }
         initFullScreen()
         initPlayerOptions()
+    }
+
+    fun resumeMovie(resume: Boolean) {
+        if(resume) {
+            videoPlaying?.let {
+                player_view?.player?.seekTo(it.position)
+            }
+        }else{
+            player_view?.onResume()
+        }
     }
 
     private fun initPlayerOptions(){
@@ -147,6 +177,14 @@ class PlayerActivity : AppCompatActivity() {
         isPlayerPlaying = exoPlayer.playWhenReady
         playbackPosition = exoPlayer.currentPosition
         currentWindow = exoPlayer.currentWindowIndex
+        doAsync {
+            val db = AppDatabase(this@PlayerActivity)
+            if(videoPlaying != null){
+                db.videoPlayingDAO().update(VideoPlaying(idMovie as Int, moviePath as String,  playbackPosition))
+            }else{
+                db.videoPlayingDAO().insert(VideoPlaying(idMovie as Int, moviePath as String,  playbackPosition))
+            }
+        }
         exoPlayer.release()
     }
 
@@ -222,7 +260,8 @@ class PlayerActivity : AppCompatActivity() {
             && packageManager
                 .hasSystemFeature(
                     PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
-            player_view?.player?.let {
+                pipMode =  true
+                player_view?.player?.let {
                 playbackPosition = it.currentPosition
                         player_view?.useController = false
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -234,13 +273,17 @@ class PlayerActivity : AppCompatActivity() {
             }
             Handler().postDelayed({checkPIPPermission()}, 30)
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun checkPIPPermission(){
         if(!isInPictureInPictureMode){
             onBackPressed()
-        }
+        }else pipMode = true
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean,
+                                               newConfig: Configuration) {
+        intent.putExtra(Constants.EXTRA_PIP, true)
     }
 }
