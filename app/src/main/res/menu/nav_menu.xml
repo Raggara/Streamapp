@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Accueil" />
+    <item
+        android:id="@+id/lists"
+        android:icon="@drawable/ic_baseline_playlist_play_24"
+        android:title="Mes listes" />
+    <item
+        android:id="@+id/navigate"
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="Naviguer" />
+    <item
+        android:id="@+id/preferences"
+        android:icon="@drawable/exo_ic_settings"
+        android:title="Préférences" />
+</menu>

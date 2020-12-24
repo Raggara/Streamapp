@@ -2,12 +2,13 @@ package com.esgi.streamapp.utils
 
 import androidx.room.*
 import com.esgi.streamapp.utils.models.Favorites
+import com.esgi.streamapp.utils.models.History
 import com.esgi.streamapp.utils.models.Preferences
 import com.esgi.streamapp.utils.models.VideoPlaying
 
 @Dao
 interface VideoPlayingCachingDAO {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg vid: VideoPlaying)
 
     @Query("SELECT * FROM VideoPlaying WHERE path LIKE :path")
@@ -22,7 +23,7 @@ interface VideoPlayingCachingDAO {
 
 @Dao
 interface PreferencesCachingDAO{
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg pref: Preferences)
 
     @Query("SELECT * FROM Preferences")
@@ -43,7 +44,7 @@ interface FavoritesCachingDAO{
     @Query("SELECT * FROM Favorites WHERE movieId LIKE :id")
     fun getFavById(id: Int): Favorites
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg fav: Favorites)
 
     @Delete
@@ -51,4 +52,16 @@ interface FavoritesCachingDAO{
 
     @Update
     fun update(vararg fav: Favorites)
+}
+
+@Dao
+interface HistoryCachingDAO{
+    @Query("SELECT * FROM History")
+    fun getHistory(): List<History>
+
+    @Delete
+    fun delete(hist: History)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(vararg hist: History)
 }

@@ -2,6 +2,7 @@ package com.esgi.streamapp.Activities.ListMovies
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -13,9 +14,7 @@ import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.Activities.MovieDetailActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.Constants
-import com.esgi.streamapp.utils.models.ErrorHelper
-import com.esgi.streamapp.utils.models.Movie
-import com.esgi.streamapp.utils.models.TypeError
+import com.esgi.streamapp.utils.models.*
 import com.google.gson.Gson
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -46,6 +45,7 @@ class MovieListActivity: AppCompatActivity(),
         }
         titleCat = this.findViewById(R.id.category_title)
         titleCat?.text = categoryName
+
         initData()
     }
 
@@ -69,7 +69,6 @@ class MovieListActivity: AppCompatActivity(),
                 }
             }
         }
-
     }
 
     override fun onMovieClicked(movie: Movie?)

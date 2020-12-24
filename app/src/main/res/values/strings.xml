@@ -7,4 +7,6 @@
     <string name="movieSeen">Vous avez déjà commencé à visionner ce film. Souhaitez-vous reprendre où vous en étiez?</string>
     <string name="resume">Reprendre</string>
     <string name="restart">Recommencer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
