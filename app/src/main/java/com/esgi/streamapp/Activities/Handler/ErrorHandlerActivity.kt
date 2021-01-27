@@ -32,26 +32,26 @@ class ErrorHandlerActivity : AppCompatActivity() {
             swipeRefreshLayout?.isRefreshing = false
         }
 
-        intent.extras?.get(Constants.EXTRA_ERRTYPE)?.let {
-            errorType = it as Int
+        intent.extras?.getInt(Constants.EXTRA_ERRTYPE)?.let {
+            errorType = it
         }
 
-        Log.d("toto", errorType.toString())
+        Log.d("erreurtype", errorType.toString())
         errorImg?.setImageResource(R.drawable.error)
         errorText?.text = "Une erreur est survenue."
         errorType?.let {
             when(it){
                 0 -> {
                     errorText?.text = Constants.ERRMSG_NET
-                    errorImg?.setImageResource(R.drawable.wifi)
+                    errorImg?.setImageResource(R.drawable.no_wifi)
                 }
                 1 -> {
                     errorText?.text = Constants.ERRMSG_API
-                    errorImg?.setImageResource(R.drawable.error)
+                    errorImg?.setImageResource(R.drawable.serv_error)
                 }
                 2-> {
                     errorText?.text = Constants.ERRMSG_PLAYER
-                    errorImg?.setImageResource(R.drawable.play)
+                    errorImg?.setImageResource(R.drawable.play_error)
                 }
                 else -> {
                     errorText?.text = Constants.ERRMSG_API

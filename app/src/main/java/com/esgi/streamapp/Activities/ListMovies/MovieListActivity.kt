@@ -36,9 +36,9 @@ class MovieListActivity: AppCompatActivity(),
         recycler = this.findViewById(R.id.main_recyclerview);
         pgrBar = this.findViewById(R.id.pgrBar)
         if (!Constants.isNetworkAvailable(this)){
+            val intent = Intent(this, ErrorHandlerActivity::class.java)
             intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
-            startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            finish()
+            startActivity(intent)
         }
         intent.extras?.get(Constants.EXTRA_NAMECATEG)?.let {
             categoryName = it as String

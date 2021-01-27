@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.Activities.MainList.MainListActivity
 import com.esgi.streamapp.R
@@ -22,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
     private var vidSplash :  VideoView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         val view = layoutInflater.inflate(R.layout.splash_screen, null, false)
         setContentView(view)
@@ -35,9 +37,9 @@ class SplashActivity : AppCompatActivity() {
             if(Constants.isNetworkAvailable(this)) {
                 startActivity(Intent(this, MainListActivity::class.java))
             }else{
+                val intent = Intent(this, ErrorHandlerActivity::class.java)
                 intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
-                startActivity(Intent(this, ErrorHandlerActivity::class.java))
-                finish()
+                startActivity(intent)
             }
             finish()
         }, 3000)

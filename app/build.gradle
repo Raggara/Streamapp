@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -48,6 +49,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -57,6 +59,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.2'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.12.2'
     implementation 'com.google.android.exoplayer:extension-mediasession:2.12.2'
+    implementation 'com.google.android.exoplayer:extension-cast:2.12.2'
+    implementation 'com.google.android.gms:play-services-cast-framework:2.12.2'
     //http requests + JSON
     implementation "org.jetbrains.anko:anko:0.10.8"
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -65,4 +69,5 @@ dependencies {
     //DB room
     implementation 'androidx.room:room-runtime:2.2.6'
     kapt 'androidx.room:room-compiler:2.2.6'
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
 }

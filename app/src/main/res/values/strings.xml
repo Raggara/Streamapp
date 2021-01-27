@@ -7,6 +7,13 @@
     <string name="movieSeen">Vous avez déjà commencé à visionner ce film. Souhaitez-vous reprendre où vous en étiez?</string>
     <string name="resume">Reprendre</string>
     <string name="restart">Recommencer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_header">Préférences</string>
+    <string name="pip_ask">PIP</string>
+    <string name="darktheme_ask">Thème sombre</string>
+    <string name="cellular_ask">Données mobiles?</string>
+    <string name="sum_pip_ask">Autoriser l\'utilisation du mode Picture in Picture</string>
+    <string name="sum_pip_activated">Désactiver l\'utilisation du mode Picture in Picture</string>
+    <string name="sum_cellular_ask">Autoriser l\'utilisation des données mobiles</string>
+    <string name="sum_cellular_activated">Désactiver l\'utilisation des données mobiles</string>
+    <string name="txt_noHisto">Vous n\'avez pas encore de favoris. Il faudrait commencer à utiliser l\'appli !</string>
 </resources>

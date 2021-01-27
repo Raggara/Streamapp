@@ -41,9 +41,9 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
         this.setContentView(R.layout.media_detail)
         setSupportActionBar(findViewById(R.id.my_toolbar))
         if (!Constants.isNetworkAvailable(this)) {
+            val intent = Intent(this, ErrorHandlerActivity::class.java)
             intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
-            startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            finish()
+            startActivity(intent)
         }
         intent.extras?.get(Constants.EXTRA_IDMOV)?.let {
             idMedia = it as Int

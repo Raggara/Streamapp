@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/pref_header">
+
+        <SwitchPreferenceCompat
+            app:key="pip"
+            app:summaryOff="@string/sum_pip_ask"
+            app:summaryOn="@string/sum_pip_activated"
+            app:title="@string/pip_ask" />
+
+        <SwitchPreferenceCompat
+            app:key="cellular"
+            app:summaryOff="@string/sum_pip_ask"
+            app:summaryOn="@string/sum_pip_activated"
+            app:title="@string/cellular_ask" />
+
+        <SwitchPreferenceCompat
+            app:key="darktheme"
+            app:title="@string/darktheme_ask" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

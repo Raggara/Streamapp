@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "972727942793",
+    "project_id": "streamapp-9142f",
+    "storage_bucket": "streamapp-9142f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972727942793:android:d72c9787ffd0b16c361058",
+        "android_client_info": {
+          "package_name": "com.esgi.streamapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "972727942793-pofpbia3macteoh4fri1jjff4lasdj4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5XCxE6NCiBfgyS9amDFFMAUuPRsPV-rA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "972727942793-pofpbia3macteoh4fri1jjff4lasdj4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

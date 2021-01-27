@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/errorImg"
-            android:layout_width="256dp"
-            android:layout_height="325dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +29,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/text"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/errorImg"
             app:layout_constraintVertical_bias="0.21" />

@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.streamapp.Activities.ListMovies.MovieAdapter
@@ -32,11 +34,11 @@ class HistoryFragment : Fragment(), OnHistoryItemClick {
     private var recycler: RecyclerView? = null
     private var pgrBar: ProgressBar? = null
     private var db : AppDatabase? = null
+    private var mContext: Context? = null
+    private var refresh: Boolean = false
+    private var imgNoHisto: ImageView? = null
+    private var textNoHisto: TextView? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initData()
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,8 +46,14 @@ class HistoryFragment : Fragment(), OnHistoryItemClick {
         val view: View = inflater.inflate(R.layout.fragment_history, container, false)
         pgrBar = view.findViewById(R.id.pgrBar)
         recycler = view.hist_recyclerview
-
+        imgNoHisto = view.findViewById(R.id.img_noHisto)
+        textNoHisto = view.findViewById(R.id.text_nohisto)
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initData()
     }
 
     private fun initData(){
@@ -58,7 +66,17 @@ class HistoryFragment : Fragment(), OnHistoryItemClick {
                         layoutManager = GridLayoutManager((activity as PersonnalListsActivity).getContext(), 2)
                         adapter = HistoryAdapter(it,this@HistoryFragment, context)
                     }
-                    pgrBar?.visibility = View.GONE
+                    if(it.isEmpty()){
+                        recycler?.visibility = View.GONE
+                        imgNoHisto?.visibility = View.VISIBLE
+                        textNoHisto?.visibility = View.VISIBLE
+                        pgrBar?.visibility = View.GONE
+                    }else{
+                        recycler?.visibility = View.VISIBLE
+                        imgNoHisto?.visibility = View.GONE
+                        textNoHisto?.visibility = View.GONE
+                        pgrBar?.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -67,9 +85,23 @@ class HistoryFragment : Fragment(), OnHistoryItemClick {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         db = AppDatabase(context)
+        mContext = context
     }
 
-    override fun onMovieClicked(favorite: History?) {
-        Log.d("clické", "clické")
+    override fun onMovieClicked(history: History?) {
+        val intent = Intent(mContext, MovieDetailActivity::class.java)
+        intent.putExtra(Constants.EXTRA_IDMOV, history?.movieId)
+        startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(refresh){
+            initData()
+        }
+    }
+    override fun onStop() {
+        super.onStop()
+        refresh = true
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.Activities.ListMovies.MovieListActivity
+import com.esgi.streamapp.Activities.MovieDetailActivity
 import com.esgi.streamapp.Activities.PersonnalLists.PersonnalListsActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.Constants
@@ -38,9 +39,9 @@ class MainListActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         if (!Constants.isNetworkAvailable(this)) {
+            val intent = Intent(this, ErrorHandlerActivity::class.java)
             intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
-            startActivity(Intent(this, ErrorHandlerActivity::class.java))
-            finish()
+            startActivity(intent)
         }
         recycler = this.findViewById(R.id.home_rv);
         pgrBar = this.findViewById(R.id.pgrBar)
@@ -51,6 +52,7 @@ class MainListActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.lists -> {
                     startActivity(Intent(this, PersonnalListsActivity::class.java))
+                    overridePendingTransition(0, 0)
                 }
                 R.id.navigate -> {
                     Toast.makeText(this, "navigate", Toast.LENGTH_SHORT)

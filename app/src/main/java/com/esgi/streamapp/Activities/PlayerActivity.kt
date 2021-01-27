@@ -18,14 +18,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esgi.streamapp.Activities.Handler.ErrorHandlerActivity
 import com.esgi.streamapp.R
 import com.esgi.streamapp.utils.Constants
-import com.esgi.streamapp.utils.models.*
+import com.esgi.streamapp.utils.models.AppDatabase
+import com.esgi.streamapp.utils.models.VideoPlaying
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.exoplayer2.util.Util
-import org.jetbrains.anko.displayMetrics
 import org.jetbrains.anko.doAsync
 
 
@@ -67,6 +67,7 @@ class PlayerActivity : AppCompatActivity() {
         this.btn_forward = findViewById(R.id.forward)
         this.loading = findViewById(R.id.loading)
 
+
         this.player_view = findViewById(R.id.video_view)
         dataSourceFactory = DefaultDataSourceFactory(this,
             Util.getUserAgent(this, "StreamApp"))
@@ -89,9 +90,11 @@ class PlayerActivity : AppCompatActivity() {
         }
         Handler().postDelayed({
             if(videoPlaying != null){
-                if(isPlayerPlaying)player_view?.onPause()
+                player_view?.player?.pause()
                 var dial = DialogMovieSeen()
                 dial.show(supportFragmentManager, "dialogMovieSeen")
+            }else{
+                player_view?.onResume()
             }
         }, 100)
 
@@ -129,6 +132,7 @@ class PlayerActivity : AppCompatActivity() {
                 )
             }
         }
+
         initFullScreen()
         initPlayerOptions()
     }
@@ -137,9 +141,13 @@ class PlayerActivity : AppCompatActivity() {
         if(resume) {
             videoPlaying?.let {
                 player_view?.player?.seekTo(it.position)
+                player_view?.player?.play()
             }
         }else{
-            player_view?.onResume()
+            videoPlaying?.let {
+                player_view?.player?.seekTo(0)
+                player_view?.player?.play()
+            }
         }
     }
 
@@ -242,9 +250,9 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun runError(type: Int){
+        val intent = Intent(this, ErrorHandlerActivity::class.java)
         intent.putExtra(Constants.EXTRA_ERRTYPE, type)
-        startActivity(Intent(this, ErrorHandlerActivity::class.java))
-        finish()
+        startActivity(intent)
     }
 
 
