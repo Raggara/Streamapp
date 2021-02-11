@@ -33,7 +33,7 @@ class MainListItemsAdapter(private val movies : List<Movie>, private val context
         Picasso.get().load(movie.image).into(holder.imageView)
         holder.imageView.setOnClickListener {
             val intent = Intent(context, MovieDetailActivity::class.java)
-            intent.putExtra(Constants.EXTRA_IDMOV, movie?.id)
+            intent.putExtra(Constants.EXTRA_IDMOV, movie.id)
             ContextCompat.startActivity(context, intent, null)
         }
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Streamapp</string>
+    <string name="app_name">StreamApp</string>
     <string name="description">Une appli de stream pour les bg</string>
     <string name="notation">Notation du film</string>
     <string name="title">Titre du film</string>
@@ -15,5 +15,7 @@
     <string name="sum_pip_activated">Désactiver l\'utilisation du mode Picture in Picture</string>
     <string name="sum_cellular_ask">Autoriser l\'utilisation des données mobiles</string>
     <string name="sum_cellular_activated">Désactiver l\'utilisation des données mobiles</string>
-    <string name="txt_noHisto">Vous n\'avez pas encore de favoris. Il faudrait commencer à utiliser l\'appli !</string>
+    <string name="txt_noHisto">L\historique est vide. Il faudrait commencer à utiliser l\'appli !</string>
+    <string name="menu_accueil">Accueil</string>
+    <string name="menu_listes">Listes</string>
 </resources>

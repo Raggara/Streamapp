@@ -32,12 +32,6 @@ class PersonnalListsActivity : AppCompatActivity() {
                     startActivity(Intent(this@PersonnalListsActivity, MainListActivity::class.java))
                     overridePendingTransition(0, 0)
                 }
-                R.id.navigate -> {
-                    Toast.makeText(this, "navigate", Toast.LENGTH_SHORT)
-                }
-                R.id.preferences -> {
-                    Toast.makeText(this, "pref", Toast.LENGTH_SHORT)
-                }
             }
             true
         }

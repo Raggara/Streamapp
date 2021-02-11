@@ -6,15 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.esgi.streamapp.utils.FavoritesCachingDAO
 import com.esgi.streamapp.utils.HistoryCachingDAO
-import com.esgi.streamapp.utils.PreferencesCachingDAO
 import com.esgi.streamapp.utils.VideoPlayingCachingDAO
 
 @Database(
-    entities = [Preferences::class, VideoPlaying::class, Favorites::class, History::class],
+    entities = [VideoPlaying::class, Favorites::class, History::class],
     version = 1
 )
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun preferencesDAO(): PreferencesCachingDAO
     abstract fun videoPlayingDAO(): VideoPlayingCachingDAO
     abstract fun favoritesDAO(): FavoritesCachingDAO
     abstract fun historyDAO(): HistoryCachingDAO

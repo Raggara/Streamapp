@@ -37,7 +37,7 @@ class MainListAdapter(private val categories : List<Category>, private val conte
         holder.textView.text = category.name
         holder.viewAllButton.onClick {
             val intent = Intent(context, MovieListActivity::class.java)
-            intent.putExtra(Constants.EXTRA_NAMECATEG, category?.name)
+            intent.putExtra(Constants.EXTRA_NAMECATEG, category.name)
             ContextCompat.startActivity(context, intent, null)
         }
         val childLayoutManager = LinearLayoutManager(

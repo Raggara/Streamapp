@@ -43,7 +43,7 @@ class MainListActivity : AppCompatActivity() {
             intent.putExtra(Constants.EXTRA_ERRTYPE, 0)
             startActivity(intent)
         }
-        recycler = this.findViewById(R.id.home_rv);
+        recycler = this.findViewById(R.id.home_rv)
         pgrBar = this.findViewById(R.id.pgrBar)
         bottomNav = this.findViewById(R.id.navBar)
 
@@ -53,12 +53,6 @@ class MainListActivity : AppCompatActivity() {
                 R.id.lists -> {
                     startActivity(Intent(this, PersonnalListsActivity::class.java))
                     overridePendingTransition(0, 0)
-                }
-                R.id.navigate -> {
-                    Toast.makeText(this, "navigate", Toast.LENGTH_SHORT)
-                }
-                R.id.preferences -> {
-                    Toast.makeText(this, "pref", Toast.LENGTH_SHORT)
                 }
             }
             true
@@ -73,14 +67,14 @@ class MainListActivity : AppCompatActivity() {
             val categories: List<Categories> =
                 Gson().fromJson(stringResponse, Array<Categories>::class.java).toList()
             categories.forEach {
-                val url = URL(Constants.URL_SERV + "/list?type=${it.type}&range=7&page=1")
-                val resp: String = url.readText()
+                val newUrl = URL(Constants.URL_SERV + "/list?type=${it.type}&range=7&page=1")
+                val resp: String = newUrl.readText()
                 val items: List<Movie> = Gson().fromJson(resp, Array<Movie>::class.java).toList()
-                val element = Category(it.type, items);
-                data?.add(element)
+                val element = Category(it.type, items)
+                data.add(element)
             }
             uiThread {
-                data?.let {
+                data.let {
                     recycler?.apply {
                         layoutManager = LinearLayoutManager(this@MainListActivity)
                         adapter = MainListAdapter(

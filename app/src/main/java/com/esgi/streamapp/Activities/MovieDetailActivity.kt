@@ -23,10 +23,10 @@ import java.net.URL
 
 class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var movieTitle: TextView? = null;
-    private var movieDescription: TextView? = null;
-    private var movieRate: RatingBar? = null;
-    private var btnPlay: ImageButton? = null;
+    private var movieTitle: TextView? = null
+    private var movieDescription: TextView? = null
+    private var movieRate: RatingBar? = null
+    private var btnPlay: ImageButton? = null
     private var movieImg: ImageView? = null
     private var imgFavEmpty: ImageView? = null
     private var imgFavPlain: ImageView? = null
@@ -73,7 +73,7 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
         this.imgFavEmpty?.setOnClickListener {
             doAsync {
                 val db = AppDatabase(this@MovieDetailActivity)
-                db.favoritesDAO().insert(Favorites(movie?.id, movie?.id, movie?.image, movie.title))
+                db.favoritesDAO().insert(Favorites(movie.id, movie.id, movie.image, movie.title))
             }
             imgFavPlain?.visibility = View.VISIBLE
             imgFavEmpty?.visibility = View.GONE
@@ -115,7 +115,7 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         doAsync {
             val db = AppDatabase(this@MovieDetailActivity)
-            db?.historyDAO().insert(History(movie.id, movie.id, movie.image, movie.title))
+            db.historyDAO().insert(History(movie.id, movie.id, movie.image, movie.title))
         }
     }
 

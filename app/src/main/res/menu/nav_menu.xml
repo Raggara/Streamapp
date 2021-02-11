@@ -3,21 +3,9 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Accueil" />
+        android:title="@string/menu_accueil" />
     <item
         android:id="@+id/lists"
         android:icon="@drawable/ic_baseline_playlist_play_24"
-        android:title="Mes listes" />
-    <item
-        android:visible="false"
-        android:enabled="false"
-        android:id="@+id/navigate"
-        android:icon="@drawable/ic_baseline_dashboard_24"
-        android:title="Naviguer" />
-    <item
-        android:visible="false"
-        android:enabled="false"
-        android:id="@+id/preferences"
-        android:icon="@drawable/exo_ic_settings"
-        android:title="Préférences" />
+        android:title="@string/menu_listes" />
 </menu>

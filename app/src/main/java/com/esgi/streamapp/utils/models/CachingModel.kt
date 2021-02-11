@@ -13,15 +13,6 @@ data class VideoPlaying(
     @ColumnInfo(name = "position") var position: Long
 )
 
-@Entity(tableName = "Preferences")
-data class Preferences(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
-
-    @ColumnInfo(name = "pip") var pip: Boolean,
-    @ColumnInfo(name = "dark_theme") var dark_theme: Boolean
-)
-
 @Entity(tableName = "Favorites")
 data class Favorites(
     @PrimaryKey(autoGenerate = true)

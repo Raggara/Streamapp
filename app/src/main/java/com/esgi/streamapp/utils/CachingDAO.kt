@@ -3,7 +3,6 @@ package com.esgi.streamapp.utils
 import androidx.room.*
 import com.esgi.streamapp.utils.models.Favorites
 import com.esgi.streamapp.utils.models.History
-import com.esgi.streamapp.utils.models.Preferences
 import com.esgi.streamapp.utils.models.VideoPlaying
 
 @Dao
@@ -19,21 +18,6 @@ interface VideoPlayingCachingDAO {
 
     @Update
     fun update(vararg vid: VideoPlaying)
-}
-
-@Dao
-interface PreferencesCachingDAO{
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg pref: Preferences)
-
-    @Query("SELECT * FROM Preferences")
-    fun getPref(): List<Preferences>
-
-    @Delete
-    fun delete(pref: Preferences)
-
-    @Update
-    fun update(vararg pref: Preferences)
 }
 
 @Dao

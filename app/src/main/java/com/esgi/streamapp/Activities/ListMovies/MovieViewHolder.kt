@@ -53,7 +53,7 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup, private val c
 
         itemView.setOnClickListener(this)
         imgMenu?.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(this.context,imgMenu)
+            val popupMenu = PopupMenu(this.context,imgMenu)
             popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when(item.itemId) {
@@ -62,12 +62,12 @@ class MovieViewHolder(inflater: LayoutInflater, parent: ViewGroup, private val c
                             action = Intent.ACTION_SEND
                             putExtra(Intent.EXTRA_TEXT,
                                 """Toi aussi viens regarder ${movie.title} sur StreamApp !
-                                    |Tu veux l'appli? Envoie "Appli" au 61212.
+                                    |Tu veux l'appli? Envoie "Appli" au 61212, ou télécharge l'appli sur le lien suivant : 
+                                    |${Constants.URL_APK}
                                 """.trimMargin()
                             )
                             type = "text/plain"
                         }
-
                         val shareIntent = Intent.createChooser(sendIntent, null)
                         startActivity(this.context, shareIntent, null)
                     }
